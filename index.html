@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMEZONE 🔥🎮</title>
+    <!-- Fontes e Ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        /* --- ESTILO GERAL (DARK MODE + NEON) --- */
         :root {
-            --primary: #ff003c; /* Vermelho Neon */
+            --primary: #ff003c;
             --dark: #0a0a0a;
             --card-bg: #161616;
             --text: #ffffff;
             --gray: #b3b3b3;
-            --glow: 0 0 10px var(--primary), 0 0 20px var(--primary);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +35,7 @@
             color: var(--text); font-weight: bold; cursor: pointer; transition: 0.3s;
             text-transform: uppercase; letter-spacing: 1px; display: inline-block;
         }
-        .btn:hover { background: var(--primary); box-shadow: var(--glow); }
+        .btn:hover { background: var(--primary); box-shadow: 0 0 15px var(--primary); }
         .btn-primary { background: var(--primary); border: none; }
         .btn-primary:hover { background: #fff; color: var(--primary); }
         .btn-small { padding: 5px 10px; font-size: 0.8rem; }
@@ -45,7 +46,7 @@
             border-bottom: 1px solid #333;
         }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .logo { font-size: 2rem; font-weight: 700; color: var(--primary); text-shadow: 0 0 10px rgba(255,0,60,0.5); cursor: pointer;}
+        .logo { font-size: 2rem; font-weight: 700; color: var(--primary); cursor: pointer;}
         .nav-links button {
             background: none; border: none; color: white; margin-left: 20px;
             font-size: 1rem; cursor: pointer; transition: 0.3s;
@@ -57,7 +58,7 @@
             font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; 
         }
 
-        /* Hero */
+        /* Hero Section */
         .hero {
             height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448e05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
@@ -82,20 +83,24 @@
         .card-body { padding: 20px; }
         .price { color: var(--primary); font-size: 1.5rem; font-weight: bold; display: block; margin: 10px 0; }
 
-        /* Modais (Janelas) */
-        .modal {
+        /* MODAIS (JANELAS) - CORRIGIDO PARA FUNCIONAR SEMPRE */
+        .modal-overlay {
             display: none; /* Escondido por padrão */
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9);
             justify-content: center; align-items: center;
             z-index: 2000;
         }
-        .modal.active { display: flex; } /* Classe para mostrar */
         
+        /* Classe que o JS vai adicionar para mostrar */
+        .modal-overlay.active { 
+            display: flex !important; 
+        }
+
         .modal-content {
             background: var(--card-bg); padding: 40px; border-radius: 10px;
             width: 90%; max-width: 400px; border: 1px solid var(--primary);
-            position: relative; box-shadow: var(--glow);
+            position: relative; box-shadow: 0 0 20px rgba(255,0,60,0.3);
         }
         .close-modal { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 1.5rem; color: var(--gray); }
         .close-modal:hover { color: var(--primary); }
@@ -114,10 +119,6 @@
         /* Footer */
         footer { background: #050505; padding: 40px 0; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
         
-        /* Admin Panel */
-        .admin-panel { display: none; padding: 20px; background: #111; border: 1px dashed var(--primary); margin-bottom: 20px; }
-        .user-badge { display: none; margin-left: 20px; color: var(--primary); font-size: 0.9rem; }
-
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .nav-flex { flex-direction: column; gap: 15px; }
@@ -134,7 +135,7 @@
                 <button onclick="scrollToSection('home')">Início</button>
                 <button onclick="scrollToSection('products')">Loja</button>
                 <button id="loginBtn"><i class="fas fa-user"></i> Login</button>
-                <span id="userBadge" class="user-badge">Olá, Gamer!</span>
+                <span id="userBadge" style="display:none; margin-left: 20px; color: var(--primary);">Olá, Gamer!</span>
                 <button class="cart-icon" onclick="toggleModal('cartModal')">
                     <i class="fas fa-shopping-cart"></i> Carrinho
                     <span class="cart-count" id="cartCount">0</span>
@@ -142,14 +143,6 @@
             </nav>
         </div>
     </header>
-
-    <!-- Painel Admin (Escondido até logar como admin) -->
-    <div id="adminPanel" class="container" style="display:none; margin-top: 20px;">
-        <div class="admin-panel" style="display:block;">
-            <h3><i class="fas fa-lock"></i> Área do Administrador</h3>
-            <p>Status do sistema: Online | Pedidos pendentes: 3</p>
-        </div>
-    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -173,16 +166,11 @@
         <div class="container">
             <h2>GAMEZONE</h2>
             <p>&copy; 2026 Gamezone Store. Todos os direitos reservados.</p>
-            <div style="margin-top: 20px; font-size: 1.5rem;">
-                <i class="fab fa-instagram" style="margin: 0 10px;"></i>
-                <i class="fab fa-discord" style="margin: 0 10px;"></i>
-                <i class="fab fa-twitter" style="margin: 0 10px;"></i>
-            </div>
         </div>
     </footer>
 
     <!-- MODAL LOGIN -->
-    <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-modal" onclick="toggleModal('loginModal')">&times;</span>
             <h2 class="modal-title">Entrar</h2>
@@ -190,15 +178,12 @@
                 <input type="email" id="email" placeholder="Seu Email" required value="cliente@teste.com">
                 <input type="password" id="pass" placeholder="Sua Senha" required value="123456">
                 <button type="submit" class="btn btn-primary" style="width:100%">ENTRAR</button>
-                <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; color: #666;">
-                    Dica: Use <b>admin@games.com</b> / <b>admin</b> para ver o painel.
-                </p>
             </form>
         </div>
     </div>
 
     <!-- MODAL CARRINHO -->
-    <div id="cartModal" class="modal">
+    <div id="cartModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-modal" onclick="toggleModal('cartModal')">&times;</span>
             <h2 class="modal-title">Seu Carrinho 🛒</h2>
@@ -222,11 +207,15 @@
         ];
 
         let cart = [];
-        let isLoggedIn = false;
 
         // --- INICIALIZAÇÃO ---
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
+            
+            // Adiciona evento de clique no botão Login
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                toggleModal('loginModal');
+            });
         });
 
         function renderProducts() {
@@ -245,25 +234,20 @@
             `).join('');
         }
 
-        // --- SISTEMA DE MODAIS (O QUE ESTAVA FALTANDO) ---
+        // --- SISTEMA DE MODAIS (CORREÇÃO PRINCIPAL) ---
         function toggleModal(modalId) {
             const modal = document.getElementById(modalId);
-            if (modal.style.display === "flex") {
-                modal.style.display = "none";
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
             } else {
-                modal.style.display = "flex";
+                modal.classList.add('active');
             }
         }
 
-        // Abrir login ao clicar no botão
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            toggleModal('loginModal');
-        });
-
-        // Fechar modais ao clicar fora
+        // Fechar modais ao clicar fora (no fundo escuro)
         window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = "none";
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
             }
         }
 
@@ -307,32 +291,17 @@
 
         function checkout() {
             if(cart.length === 0) return alert("Seu carrinho está vazio!");
-            alert("Redirecionando para o Pix...\n(Obrigado pela preferência!)");
+            alert("Redirecionando para o Pix...");
             cart = [];
             updateCartUI();
             toggleModal('cartModal');
         }
 
-        // --- LÓGICA DE LOGIN E ADMIN ---
+        // --- LÓGICA DE LOGIN ---
         function handleLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-
-            // Simulação simples
-            if(email === 'admin@games.com' && pass === 'admin') {
-                alert("Bem-vindo, ADMINISTRADOR! 🔓");
-                isLoggedIn = true;
-                document.getElementById('adminPanel').style.display = 'block';
-                document.getElementById('userBadge').style.display = 'inline';
-                document.getElementById('userBadge').innerText = "ADMIN";
-                document.getElementById('userBadge').style.color = "#00ff00";
-            } else {
-                alert("Login realizado com sucesso! Bem-vindo, Gamer.");
-                isLoggedIn = true;
-                document.getElementById('userBadge').style.display = 'inline';
-            }
-            
+            alert("Login realizado com sucesso! Bem-vindo.");
+            document.getElementById('userBadge').style.display = 'inline';
             toggleModal('loginModal');
         }
 
@@ -341,4 +310,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
