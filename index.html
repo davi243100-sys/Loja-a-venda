@@ -4,376 +4,300 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMEZONE 🔥🎮</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- DESIGN GAMER PRETO E VERMELHO NEON --- */
         :root {
-            --neon-red: #ff003c;
-            --dark-bg: #0a0a0a;
+            --primary: #ff003c; /* Vermelho Neon */
+            --dark: #0a0a0a;
             --card-bg: #161616;
+            --text: #ffffff;
+            --gray: #b3b3b3;
+            --glow: 0 0 10px var(--primary), 0 0 20px var(--primary);
         }
 
-        body {
-            background-color: var(--dark-bg);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .neon-text { text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        .btn-neon {
-            background: transparent; border: 2px solid var(--neon-red); color: white; transition: 0.3s;
-        }
-        .btn-neon:hover {
-            background: var(--neon-red); box-shadow: 0 0 20px var(--neon-red); transform: scale(1.05);
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--neon-red); border-radius: 4px; }
-
-        /* Estilo das Abas de Categoria */
-        .category-btn.active {
-            background-color: var(--neon-red);
-            color: white;
-            border-color: var(--neon-red);
-            box-shadow: 0 0 10px var(--neon-red);
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            scroll-behavior: smooth;
         }
 
-        .delete-btn {
-            cursor: pointer; color: #ef4444; transition: 0.2s;
+        h1, h2, h3, .logo { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; }
+
+        /* Botões */
+        .btn {
+            padding: 12px 24px; background: transparent; border: 2px solid var(--primary);
+            color: var(--text); font-weight: bold; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px; display: inline-block;
         }
-        .delete-btn:hover {
-            color: #fca5a5; transform: scale(1.2);
+        .btn:hover { background: var(--primary); box-shadow: var(--glow); }
+        .btn-primary { background: var(--primary); border: none; }
+        .btn-primary:hover { background: #fff; color: var(--primary); }
+        .btn-small { padding: 5px 10px; font-size: 0.8rem; }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.98); padding: 20px 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 2rem; font-weight: 700; color: var(--primary); text-shadow: 0 0 10px rgba(255,0,60,0.5); cursor: pointer;}
+        .nav-links button {
+            background: none; border: none; color: white; margin-left: 20px;
+            font-size: 1rem; cursor: pointer; transition: 0.3s;
+        }
+        .nav-links button:hover { color: var(--primary); }
+        .cart-icon { position: relative; }
+        .cart-count { 
+            position: absolute; top: -10px; right: -10px; background: var(--primary); 
+            font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; 
+        }
+
+        /* Hero */
+        .hero {
+            height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448e05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; line-height: 1; }
+        .hero span { color: var(--primary); }
+        .hero p { font-size: 1.2rem; color: var(--gray); margin-bottom: 30px; }
+
+        /* Produtos */
+        .products-section { padding: 80px 0; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.5rem; }
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
+        }
+        .card {
+            background: var(--card-bg); border: 1px solid #333; border-radius: 10px;
+            overflow: hidden; transition: 0.3s; position: relative;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 20px; }
+        .price { color: var(--primary); font-size: 1.5rem; font-weight: bold; display: block; margin: 10px 0; }
+
+        /* Modais (Janelas) */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center; align-items: center;
+            z-index: 2000;
+        }
+        .modal.active { display: flex; } /* Classe para mostrar */
+        
+        .modal-content {
+            background: var(--card-bg); padding: 40px; border-radius: 10px;
+            width: 90%; max-width: 400px; border: 1px solid var(--primary);
+            position: relative; box-shadow: var(--glow);
+        }
+        .close-modal { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 1.5rem; color: var(--gray); }
+        .close-modal:hover { color: var(--primary); }
+        
+        input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            background: #222; border: 1px solid #444; color: white; border-radius: 5px;
+        }
+        input:focus { outline: none; border-color: var(--primary); }
+        
+        /* Utilitários Modal */
+        .modal-title { text-align: center; margin-bottom: 20px; color: var(--primary); }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .total-price { font-size: 1.2rem; font-weight: bold; margin-top: 20px; text-align: right; color: var(--primary); }
+
+        /* Footer */
+        footer { background: #050505; padding: 40px 0; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+        
+        /* Admin Panel */
+        .admin-panel { display: none; padding: 20px; background: #111; border: 1px dashed var(--primary); margin-bottom: 20px; }
+        .user-badge { display: none; margin-left: 20px; color: var(--primary); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-flex { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-    <!-- NAV BAR -->
-    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-red-600 shadow-[0_0_15px_rgba(255,0,60,0.3)]">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold tracking-wider cursor-pointer" onclick="showPage('home')">
-                GAME<span class="text-red-500 neon-text">ZONE</span>
-            </div>
-            
-            <div class="flex gap-6 items-center">
-                <button onclick="showPage('home')" class="hover:text-red-500 transition"><i class="fas fa-home"></i></button>
-                
-                <button onclick="toggleCart()" class="relative hover:text-red-500 transition">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+    <!-- Navegação -->
+    <header>
+        <div class="nav-flex">
+            <div class="logo" onclick="location.reload()"><i class="fas fa-gamepad"></i> GAMEZONE</div>
+            <nav class="nav-links">
+                <button onclick="scrollToSection('home')">Início</button>
+                <button onclick="scrollToSection('products')">Loja</button>
+                <button id="loginBtn"><i class="fas fa-user"></i> Login</button>
+                <span id="userBadge" class="user-badge">Olá, Gamer!</span>
+                <button class="cart-icon" onclick="toggleModal('cartModal')">
+                    <i class="fas fa-shopping-cart"></i> Carrinho
+                    <span class="cart-count" id="cartCount">0</span>
                 </button>
-
-                <!-- Área Logado -->
-                <div id="user-section" class="hidden flex items-center gap-4">
-                    <button onclick="showPage('profile')" class="hover:text-red-500 transition" title="Meus Pedidos"><i class="fas fa-user"></i></button>
-                    
-                    <!-- Botão ADMIN -->
-                    <button id="admin-link" onclick="showPage('admin')" class="hover:text-yellow-400 transition" title="Painel Admin">
-                        <i class="fas fa-crown"></i>
-                    </button>
-
-                    <button onclick="logout()" class="text-gray-500 hover:text-white"><i class="fas fa-sign-out-alt"></i></button>
-                </div>
-
-                <!-- Botão Login -->
-                <button id="login-btn" onclick="openModal('login-modal')" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition shadow-[0_0_10px_#ff003c]">
-                    LOGIN
-                </button>
-            </div>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- PÁGINAS -->
-    <main class="flex-grow container mx-auto px-4 py-8 relative">
-        
-        <!-- HOME PAGE -->
-        <div id="page-home" class="block animate-fade-in">
-            <div class="text-center mb-12 mt-8">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-900 drop-shadow-lg">
-                    SEU GAME, SUA ESCOLHA!
-                </h1>
-                <p class="text-gray-400 text-lg mb-8">A loja digital definitiva para gamers.</p>
-                
-                <div class="max-w-xl mx-auto relative mb-8">
-                    <input type="text" id="search-input" placeholder="Buscar por nome do produto..." 
-                        class="w-full bg-zinc-900 border border-zinc-700 rounded-full py-3 px-6 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition text-white"
-                        onkeyup="filterProducts()">
-                    <i class="fas fa-search absolute right-6 top-4 text-gray-500"></i>
-                </div>
-
-                <!-- FILTROS DE CATEGORIA -->
-                <div class="flex flex-wrap justify-center gap-3 mb-10" id="category-filters">
-                    <!-- JS vai preencher aqui -->
-                </div>
-            </div>
-
-            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- JS vai preencher aqui -->
-            </div>
-        </div>
-
-        <!-- ADMIN PANEL -->
-        <div id="page-admin" class="hidden animate-fade-in">
-            <div class="flex justify-between items-center mb-6 border-b border-red-600 pb-2">
-                <h2 class="text-3xl font-bold"><i class="fas fa-lock"></i> Painel Administrativo</h2>
-                <div class="text-sm text-gray-400">Bem-vindo, Chefe!</div>
-            </div>
-
-            <!-- Abas do Admin -->
-            <div class="flex gap-4 mb-6">
-                <button onclick="switchAdminTab('orders')" class="px-4 py-2 bg-zinc-800 rounded hover:bg-red-600 transition active-tab">Pedidos</button>
-                <button onclick="switchAdminTab('categories')" class="px-4 py-2 bg-zinc-800 rounded hover:bg-red-600 transition">Categorias</button>
-                <button onclick="switchAdminTab('products')" class="px-4 py-2 bg-zinc-800 rounded hover:bg-red-600 transition">Produtos</button>
-            </div>
-
-            <!-- ABA PEDIDOS -->
-            <div id="tab-orders" class="block">
-                <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-700">
-                    <h3 class="text-xl mb-4">Pedidos Realizados</h3>
-                    <div id="admin-orders-list" class="space-y-4"></div>
-                </div>
-            </div>
-
-            <!-- ABA CATEGORIAS -->
-            <div id="tab-categories" class="hidden">
-                <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-700 mb-8">
-                    <h3 class="text-xl mb-4">Criar Nova Categoria</h3>
-                    <form onsubmit="addNewCategory(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" id="new-cat-name" placeholder="Nome da Categoria (Ex: Block Sword)" required class="bg-black border border-gray-700 p-3 rounded text-white">
-                        <button type="submit" class="md:col-span-2 btn-neon py-3 rounded font-bold">CRIAR CATEGORIA</button>
-                    </form>
-                </div>
-                <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-700">
-                    <h3 class="text-xl mb-4">Suas Categorias Ativas (Clique na lixeira para excluir)</h3>
-                    <div id="admin-cat-list" class="space-y-2"></div>
-                </div>
-            </div>
-
-            <!-- ABA PRODUTOS -->
-            <div id="tab-products" class="hidden">
-                <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-700 mb-8">
-                    <h3 class="text-xl mb-4">Adicionar Produto</h3>
-                    <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" id="new-name" placeholder="Nome do Produto (Ex: 900 Gemas)" required class="bg-black border border-gray-700 p-3 rounded text-white">
-                        
-                        <select id="new-category" class="bg-black border border-gray-700 p-3 rounded text-white">
-                            <!-- Opções virão do JS -->
-                        </select>
-
-                        <input type="number" id="new-price" placeholder="Preço (R$)" step="0.01" required class="bg-black border border-gray-700 p-3 rounded text-white">
-                        <input type="url" id="new-img" placeholder="URL da Imagem (Ex: https://...)" required class="bg-black border border-gray-700 p-3 rounded text-white md:col-span-2">
-                        <button type="submit" class="md:col-span-2 btn-neon py-3 rounded font-bold">ADICIONAR À LOJA</button>
-                    </form>
-                </div>
-
-                <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-700">
-                    <h3 class="text-xl mb-4">Lista de Produtos (Clique na lixeira para excluir)</h3>
-                    <div id="admin-products-list" class="space-y-2"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MEUS PEDIDOS (Usuário comum) -->
-        <div id="page-profile" class="hidden animate-fade-in">
-            <h2 class="text-3xl font-bold mb-6 border-b border-red-600 pb-2"><i class="fas fa-box-open"></i> Meus Pedidos</h2>
-            <div id="user-orders-list" class="space-y-4"></div>
-        </div>
-
-    </main>
-
-    <!-- MODAL CARRINHO -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/80 hidden z-50 flex justify-end">
-        <div class="bg-zinc-900 w-full max-w-md h-full border-l border-red-600 p-6 flex flex-col">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Carrinho 🛒</h2>
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
-            </div>
-            
-            <div id="cart-items" class="flex-grow overflow-y-auto space-y-4"></div>
-
-            <div class="border-t border-gray-700 pt-4 mt-4">
-                <div class="flex justify-between text-xl font-bold mb-4">
-                    <span>Total:</span>
-                    <span id="cart-total" class="text-red-500">R$ 0,00</span>
-                </div>
-                <button onclick="checkout()" class="w-full btn-neon py-3 rounded font-bold">
-                    PAGAR VIA PIX 💸
-                </button>
-            </div>
+    <!-- Painel Admin (Escondido até logar como admin) -->
+    <div id="adminPanel" class="container" style="display:none; margin-top: 20px;">
+        <div class="admin-panel" style="display:block;">
+            <h3><i class="fas fa-lock"></i> Área do Administrador</h3>
+            <p>Status do sistema: Online | Pedidos pendentes: 3</p>
         </div>
     </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>SEU GAME, <br><span>SUA ESCOLHA!</span></h1>
+            <p>A loja mais moderna para gamers exigentes.</p>
+            <button class="btn btn-primary" onclick="scrollToSection('products')">VER LOJA</button>
+        </div>
+    </section>
+
+    <!-- Loja -->
+    <section id="products" class="products-section container">
+        <h2 class="section-title">Destaques 🔥</h2>
+        <div class="grid" id="productGrid">
+            <!-- Preenchido via JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h2>GAMEZONE</h2>
+            <p>&copy; 2026 Gamezone Store. Todos os direitos reservados.</p>
+            <div style="margin-top: 20px; font-size: 1.5rem;">
+                <i class="fab fa-instagram" style="margin: 0 10px;"></i>
+                <i class="fab fa-discord" style="margin: 0 10px;"></i>
+                <i class="fab fa-twitter" style="margin: 0 10px;"></i>
+            </div>
+        </div>
+    </footer>
 
     <!-- MODAL LOGIN -->
-    <div id="login-modal" class="fixed inset-0 bg-black/90 hidden z-50 flex items-center justify-center">
-        <div class="bg-zinc-900 p-8 rounded-lg border border-red-600 w-full max-w-sm relative animate-fade-in">
-            <button onclick="closeModal('login-modal')" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
-            <h2 class="text-2xl font-bold mb-6 text-center">Entrar na Gamezone</h2>
-            
-            <input type="email" id="login-email" placeholder="Seu Email" class="w-full bg-black border border-gray-700 p-3 rounded mb-4 focus:border-red-500 outline-none">
-            <input type="password" id="login-pass" placeholder="Sua Senha" class="w-full bg-black border border-gray-700 p-3 rounded mb-6 focus:border-red-500 outline-none">
-            
-            <button onclick="doLogin()" class="w-full bg-red-600 hover:bg-red-700 p-3 rounded font-bold transition shadow-[0_0_10px_#ff003c]">
-                ENTRAR
-            </button>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleModal('loginModal')">&times;</span>
+            <h2 class="modal-title">Entrar</h2>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" id="email" placeholder="Seu Email" required value="cliente@teste.com">
+                <input type="password" id="pass" placeholder="Sua Senha" required value="123456">
+                <button type="submit" class="btn btn-primary" style="width:100%">ENTRAR</button>
+                <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; color: #666;">
+                    Dica: Use <b>admin@games.com</b> / <b>admin</b> para ver o painel.
+                </p>
+            </form>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- MODAL CARRINHO -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleModal('cartModal')">&times;</span>
+            <h2 class="modal-title">Seu Carrinho 🛒</h2>
+            <div id="cartItemsContainer">
+                <p style="text-align:center; color:#666;">Carrinho vazio</p>
+            </div>
+            <div class="total-price">Total: R$ <span id="cartTotal">0,00</span></div>
+            <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="checkout()">Finalizar com Pix</button>
+        </div>
+    </div>
+
     <script>
-        // --- DADOS INICIAIS VAZIOS ---
-        let categories = JSON.parse(localStorage.getItem('gz_categories')) || [];
-        let products = JSON.parse(localStorage.getItem('gz_products')) || [];
-        
+        // --- DADOS DOS PRODUTOS ---
+        const products = [
+            { id: 1, name: "Cyber Adventure 2077", price: 199.90, img: "https://images.unsplash.com/photo-1542751371-adc38448e05e?w=500" },
+            { id: 2, name: "Space Warrior V", price: 249.90, img: "https://images.unsplash.com/photo-1552820728-8b81321e8f85?w=500" },
+            { id: 3, name: "Racing Legends", price: 149.90, img: "https://images.unsplash.com/photo-1511512578047-dfb3cb71df04?w=500" },
+            { id: 4, name: "Fantasy Quest RPG", price: 299.90, img: "https://images.unsplash.com/photo-1538481199705-c710c4e956fc?w=500" },
+            { id: 5, name: "Zombie Survival", price: 179.90, img: "https://images.unsplash.com/photo-1509198397267-3138795292d2?w=500" },
+            { id: 6, name: "FIFA Ultimate 26", price: 349.90, img: "https://images.unsplash.com/photo-1493711662012-f5bd2154c35f?w=500" }
+        ];
+
         let cart = [];
-        let orders = JSON.parse(localStorage.getItem('gz_orders')) || [];
-        let currentUser = null;
-        let currentCategory = 'all';
+        let isLoggedIn = false;
 
         // --- INICIALIZAÇÃO ---
         document.addEventListener('DOMContentLoaded', () => {
-            renderCategories();
             renderProducts();
-            checkSession();
         });
 
-        // --- RENDERIZAÇÃO DE CATEGORIAS ---
-        function setCategory(cat) {
-            currentCategory = cat;
-            
-            // Atualiza visual dos botões
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                if(btn.dataset.cat === cat) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-
-            renderProducts();
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = products.map(p => `
+                <div class="card">
+                    <img src="${p.img}" alt="${p.name}">
+                    <div class="card-body">
+                        <h3>${p.name}</h3>
+                        <span class="price">R$ ${p.price.toFixed(2)}</span>
+                        <button class="btn btn-small" onclick="addToCart(${p.id})">
+                            <i class="fas fa-cart-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function renderCategories() {
-            const container = document.getElementById('category-filters');
-            
-            // Limpa tudo e recria
-            container.innerHTML = '';
-
-            // Botão "Todos"
-            const allBtn = document.createElement('button');
-            allBtn.className = `category-btn px-4 py-2 rounded-full border border-gray-600 hover:border-red-500 transition ${currentCategory === 'all' ? 'active' : ''}`;
-            allBtn.innerText = "Todos";
-            allBtn.onclick = () => setCategory('all');
-            container.appendChild(allBtn);
-
-            // Botões das Categorias
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = `category-btn px-4 py-2 rounded-full border border-gray-600 hover:border-red-500 transition`;
-                btn.innerText = cat.name;
-                btn.onclick = () => setCategory(cat.name);
-                container.appendChild(btn);
-            });
-
-            // Se não houver categorias, mostra um aviso sutil ou deixa vazio
-            if(categories.length === 0 && currentCategory !== 'all') {
-                 // Lógica extra se necessário
-            }
-
-            // Atualizar select do admin também
-            const select = document.getElementById('new-category');
-            select.innerHTML = "";
-            if(categories.length === 0) {
-                const opt = document.createElement('option');
-                opt.text = "(Crie uma categoria primeiro)";
-                select.appendChild(opt);
+        // --- SISTEMA DE MODAIS (O QUE ESTAVA FALTANDO) ---
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.style.display === "flex") {
+                modal.style.display = "none";
             } else {
-                categories.forEach(cat => {
-                    const opt = document.createElement('option');
-                    opt.value = cat.id;
-                    opt.innerText = cat.name;
-                    select.appendChild(opt);
-                });
+                modal.style.display = "flex";
             }
         }
 
-        // --- RENDERIZAÇÃO DE PRODUTOS ---
-        function renderProducts(filter = "") {
-            const grid = document.getElementById('products-grid');
-            grid.innerHTML = "";
-            
-            // Filtra por busca E por categoria
-            const filtered = products.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(filter.toLowerCase());
-                let matchesCat = false;
-                
-                if (currentCategory === 'all') {
-                    matchesCat = true;
-                } else {
-                    // Se for categoria específica, procura pelo ID correspondente
-                    const catObj = categories.find(c => c.name === currentCategory);
-                    if (catObj) {
-                        matchesCat = p.categoryId === catObj.id;
-                    }
-                }
-                
-                return matchesSearch && matchesCat;
-            });
+        // Abrir login ao clicar no botão
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            toggleModal('loginModal');
+        });
 
-            if(filtered.length === 0) {
-                // Mensagem diferente se não tem nada cadastrado vs se filtrou e não achou
-                if(products.length === 0 && categories.length === 0) {
-                     grid.innerHTML = `<div class="col-span-4 text-center text-gray-500 py-10">A loja está vazia. Aguarde novidades! 🚀</div>`;
-                } else {
-                     grid.innerHTML = `<div class="col-span-4 text-center text-gray-500 py-10">Nenhum produto encontrado nesta categoria.</div>`;
-                }
-                return;
+        // Fechar modais ao clicar fora
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
             }
-
-            filtered.forEach(p => {
-                // Encontrar nome da categoria para exibir
-                const catObj = categories.find(c => c.id === p.categoryId);
-                const catName = catObj ? catObj.name : "Geral";
-
-                const card = document.createElement('div');
-                card.className = "bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-red-500 transition group";
-                card.innerHTML = `
-                    <div class="relative overflow-hidden h-48">
-                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <div class="absolute top-2 right-2 bg-black/70 px-2 py-1 rounded text-xs text-red-400 border border-red-900">
-                            ${catName}
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2 truncate">${p.name}</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-500 font-bold text-xl">R$ ${p.price.toFixed(2)}</span>
-                            <button onclick="addToCart(${p.id})" class="bg-red-600 hover:bg-red-700 p-2 rounded-full shadow-[0_0_5px_#ff003c]">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
         }
 
-        function filterProducts() {
-            const term = document.getElementById('search-input').value;
-            renderProducts(term);
-        }
-
-        // --- CARRINHO ---
+        // --- LÓGICA DO CARRINHO ---
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
             updateCartUI();
-            toggleCart(true);
+            
+            // Feedback visual rápido
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Adicionado';
+            setTimeout(() => btn.innerHTML = originalText, 1000);
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartCount').innerText = cart.length;
+            
+            const container = document.getElementById('cartItemsContainer');
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666;">Carrinho vazio</p>';
+                document.getElementById('cartTotal').innerText = '0,00';
+            } else {
+                container.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span>R$ ${item.price.toFixed(2)} <i class="fas fa-trash" style="color:red; cursor:pointer; margin-left:10px;" onclick="removeFromCart(${index})"></i></span>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                document.getElementById('cartTotal').innerText = total.toFixed(2);
+            }
         }
 
         function removeFromCart(index) {
@@ -381,33 +305,40 @@
             updateCartUI();
         }
 
-        function updateCartUI() {
-            const list = document.getElementById('cart-items');
-            const countBadge = document.getElementById('cart-count');
-            const totalEl = document.getElementById('cart-total');
+        function checkout() {
+            if(cart.length === 0) return alert("Seu carrinho está vazio!");
+            alert("Redirecionando para o Pix...\n(Obrigado pela preferência!)");
+            cart = [];
+            updateCartUI();
+            toggleModal('cartModal');
+        }
+
+        // --- LÓGICA DE LOGIN E ADMIN ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+
+            // Simulação simples
+            if(email === 'admin@games.com' && pass === 'admin') {
+                alert("Bem-vindo, ADMINISTRADOR! 🔓");
+                isLoggedIn = true;
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('userBadge').style.display = 'inline';
+                document.getElementById('userBadge').innerText = "ADMIN";
+                document.getElementById('userBadge').style.color = "#00ff00";
+            } else {
+                alert("Login realizado com sucesso! Bem-vindo, Gamer.");
+                isLoggedIn = true;
+                document.getElementById('userBadge').style.display = 'inline';
+            }
             
-            list.innerHTML = "";
-            let total = 0;
+            toggleModal('loginModal');
+        }
 
-            cart.forEach((item, index) => {
-                total += item.price;
-                list.innerHTML += `
-                    <div class="flex justify-between items-center bg-zinc-800 p-3 rounded border border-zinc-700">
-                        <div class="flex items-center gap-3">
-                            <img src="${item.img}" class="w-10 h-10 object-cover rounded">
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold truncate max-w-[100px]">${item.name}</span>
-                                <span class="text-xs text-gray-500">${getCategoryName(item.categoryId)}</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-red-500 font-bold text-sm">R$ ${item.price.toFixed(2)}</span>
-                            <button onclick="removeFromCart(${index})" class="text-gray-500 hover:text-red-500"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            totalEl.innerText = `R$ ${total.toFixed(2)}`;
-            countBadge.innerText = cart.length;
-            countBadge.classList.remove('hi
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+    </html>
